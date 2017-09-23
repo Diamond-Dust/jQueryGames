@@ -78,6 +78,66 @@ $('.container').click(function(){
 		//Rooks
 		case 'Rook':
 			
+			//Move up
+			let checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('I'))) && (checkingSquare.prev().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && 
+			(checkingSquare.prev().attr('class').split(' ')[checkingSquare.prev().attr('class').split(' ').length-1][0]!=
+			$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.prev();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move down
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('P'))) && (checkingSquare.next().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && 
+			(checkingSquare.next().attr('class').split(' ')[checkingSquare.next().attr('class').split(' ').length-1][0]!=
+			$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.next();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move right
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('H'))) && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.next().next().next().next().next().next().next().next();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move left
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('A'))) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
 			break;
 			
 		//Knights
@@ -113,11 +173,13 @@ $('.container').click(function(){
 			{
 				$(this).prev().toggleClass('WPawn');
 				$(this).prev().toggleClass('empty');
+				$(this).toggleClass('empty');
 			}
 			else if($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1]=='enPassantB')
 			{
 				$(this).next().toggleClass('BPawn');
 				$(this).next().toggleClass('empty');
+				$(this).toggleClass('empty');
 			}
 			
 			//enPassant setting 

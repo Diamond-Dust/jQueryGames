@@ -109,7 +109,7 @@ img {
 .container {
 	min-height: 10vh;
 	min-width: 10vh;
-	border: solid 5px;
+	border: solid 1px;
 }
 
 .BPawn {
