@@ -1,0 +1,34 @@
+#playField {
+	margin: 10vh 30vw 0vh 30vw;
+	display: flex;
+	justify-content:flex-start;
+	align-self:center;
+}
+
+.container {
+	height: 20vh;
+	width: 20vh;
+	border: solid 5px;
+}
+
+.X {
+	background-image: url("https://thecliparts.com/wp-content/uploads/2016/07/back-x-clip-art.png");
+	background-size: 100% 100%;
+}
+
+.O {
+	background-image: url("https://upload.wikimedia.org/wikipedia/en/thumb/c/c5/Map-circle-black.svg/1024px-Map-circle-black.svg.png");
+	background-size: 100% 100%;
+}
+
+.tempX {
+	background-image: url("https://thecliparts.com/wp-content/uploads/2016/07/back-x-clip-art.png");
+	background-size: 100% 100%;
+	opacity: 0.5;
+}
+
+.tempO {
+	background-image: url("https://upload.wikimedia.org/wikipedia/en/thumb/c/c5/Map-circle-black.svg/1024px-Map-circle-black.svg.png");
+	background-size: 100% 100%;
+	opacity: 0.5;
+}
