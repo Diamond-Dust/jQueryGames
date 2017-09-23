@@ -1,0 +1,187 @@
+p {
+	text-align: center;
+}
+
+img {
+	width: 10vh;
+	height: 10vh;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 10vh; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+	font-size: 2vw;
+    margin: auto;
+    padding: 2vh;
+    border: 1px solid #888;
+    width: 80%;
+}
+.options {
+	display: flex;
+	justify-content: space-around;
+}
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#playField {
+	margin: 10vh 30vw 0vh 30vw;
+	display: grid;
+	grid-template-columns: repeat(8, 10vh);
+	grid-template-rows: repeat(8, 10vh);
+}
+
+.A {
+	grid-column: 1;
+}
+.B {
+	grid-column: 2;
+}
+.C {
+	grid-column: 3;
+}
+.D {
+	grid-column: 4;
+}
+.E {
+	grid-column: 5;
+}
+.F {
+	grid-column: 6;
+}
+.G {
+	grid-column: 7;
+}
+.H {
+	grid-column: 8;
+}
+
+.I {
+	grid-row: 1;
+}
+.J {
+	grid-row: 2;
+}
+.K {
+	grid-row: 3;
+}
+.L {
+	grid-row: 4;
+}
+.M {
+	grid-row: 5;
+}
+.N {
+	grid-row: 6;
+}
+.O {
+	grid-row: 7;
+}
+.P {
+	grid-row: 8;
+}
+
+.container {
+	min-height: 10vh;
+	min-width: 10vh;
+	border: solid 5px;
+}
+
+.BPawn {
+	background-image: url('./BPawn.png');
+	transform: rotate(180deg);
+	background-size: 100% 100%;
+}
+
+.BRook {
+	background-image: url('./BRook.png');
+	transform: rotate(180deg);
+	background-size: 100% 100%;
+}
+
+.BKnight {
+	background-image: url('./BKnight.png');
+	transform: rotate(180deg);
+	background-size: 100% 100%;
+}
+
+.BBishop {
+	background-image: url('./BBishop.png');
+	transform: rotate(180deg);
+	background-size: 100% 100%;
+}
+
+.BQueen {
+	background-image: url('./BQueen.png');
+	transform: rotate(180deg);
+	background-size: 100% 100%;
+}
+
+.BKing {
+	background-image: url('./BKing.png');
+	transform: rotate(180deg);
+	background-size: 100% 100%;
+}
+
+.WPawn {
+	background-image: url('./WPawn.png');
+	background-size: 100% 100%;
+}
+
+.WRook {
+	background-image: url('./WRook.png');
+	background-size: 100% 100%;
+}
+
+.WKnight {
+	background-image: url('./WKnight.png');
+	background-size: 100% 100%;
+}
+
+.WBishop {
+	background-image: url('./WBishop.png');
+	background-size: 100% 100%;
+}
+
+.WQueen {
+	background-image: url('./WQueen.png');
+	background-size: 100% 100%;
+}
+
+.WKing {
+	background-image: url('./WKing.png');
+	background-size: 100% 100%;
+}
+
+.possible {
+	background-repeat:no-repeat;
+	background-position: center; 
+	background-image: url('./Circle.png');
+	background-size: 25% 25%;
+	opacity: 0.5;
+}

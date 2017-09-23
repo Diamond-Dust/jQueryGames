@@ -1,0 +1,110 @@
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>Chess</title>
+	<link rel="stylesheet" href="style.css"/>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	<script src="main.js" defer></script>
+</head>
+<body>
+	<div id="myModalW" class="modal">
+	  <!-- Modal content -->
+		<div class="modal-content">
+			<p>Choose to which piece the pawn shall be promoted.</p>
+			<div class="options">
+				<img id="WRimg" src="./WRook.png" alt="White Rook" />
+				<img id="WKimg" src="./WKnight.png" alt="White Knight" />
+				<img id="WBimg" src="./WBishop.png" alt="White Bishop" />
+				<img id="WQimg" src="./WQueen.png" alt="White Queen" />
+			</div>
+		</div>
+	</div>
+	
+	<div id="myModalB" class="modal">
+	  <!-- Modal content -->
+		<div class="modal-content">
+			<p>Choose to which piece the pawn shall be promoted.</p>
+			<div class="options">
+				<img id="BRimg" src="./BRook.png" alt="Black Rook" />
+				<img id="BKimg" src="./BKnight.png" alt="Black Knight" />
+				<img id="BBimg" src="./BBishop.png" alt="Black Bishop" />
+				<img id="BQimg" src="./BQueen.png" alt="Black Queen" />
+			</div>
+		</div>
+	</div>
+  
+	<div id="playField">
+			<div class="container A I BRook"></div>
+			<div class="container A J BPawn"></div>
+			<div class="container A K empty"></div>
+			<div class="container A L empty"></div>
+			<div class="container A M empty"></div>
+			<div class="container A N empty"></div>
+			<div class="container A O WPawn"></div>
+			<div class="container A P WRook"></div>
+			
+			<div class="container B I BKnight"></div>
+			<div class="container B J BPawn"></div>
+			<div class="container B K empty"></div>
+			<div class="container B L empty"></div>
+			<div class="container B M empty"></div>
+			<div class="container B N empty"></div>
+			<div class="container B O WPawn"></div>
+			<div class="container B P WKnight"></div>
+			
+			<div class="container C I BBishop"></div>
+			<div class="container C J BPawn"></div>
+			<div class="container C K empty"></div>
+			<div class="container C L empty"></div>
+			<div class="container C M empty"></div>
+			<div class="container C N empty"></div>
+			<div class="container C O WPawn"></div>
+			<div class="container C P WBishop"></div>
+			
+			<div class="container D I BQueen"></div>
+			<div class="container D J BPawn"></div>
+			<div class="container D K empty"></div>
+			<div class="container D L empty"></div>
+			<div class="container D M empty"></div>
+			<div class="container D N empty"></div>
+			<div class="container D O WPawn"></div>
+			<div class="container D P WQueen"></div>
+			
+			<div class="container E I BKing"></div>
+			<div class="container E J BPawn"></div>
+			<div class="container E K empty"></div>
+			<div class="container E L empty"></div>
+			<div class="container E M empty"></div>
+			<div class="container E N empty"></div>
+			<div class="container E O WPawn"></div>
+			<div class="container E P WKing"></div>
+			
+			<div class="container F I BBishop"></div>
+			<div class="container F J BPawn"></div>
+			<div class="container F K empty"></div>
+			<div class="container F L empty"></div>
+			<div class="container F M empty"></div>
+			<div class="container F N empty"></div>
+			<div class="container F O WPawn"></div>
+			<div class="container F P WBishop"></div>
+			
+			<div class="container G I BKnight"></div>
+			<div class="container G J BPawn"></div>
+			<div class="container G K empty"></div>
+			<div class="container G L empty"></div>
+			<div class="container G M empty"></div>
+			<div class="container G N empty"></div>
+			<div class="container G O WPawn"></div>
+			<div class="container G P WKnight"></div>
+			
+			<div class="container H I BRook"></div>
+			<div class="container H J BPawn"></div>
+			<div class="container H K empty"></div>
+			<div class="container H L empty"></div>
+			<div class="container H M empty"></div>
+			<div class="container H N empty"></div>
+			<div class="container H O WPawn"></div>
+			<div class="container H P WRook"></div>
+	</div>
+</body>
+</html>
