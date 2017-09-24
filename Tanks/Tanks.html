@@ -1,0 +1,116 @@
+<style>
+	body {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	game {
+		width:600px;
+		height:600px;
+		display: grid;
+		grid-template-columns: repeat(30, 1fr);
+		grid-template-rows: repeat(30, 1fr);
+		background-color: brown;
+	}
+	player {
+		grid-column: 1 / span 3;
+		grid-row: 1 / span 3;
+		display: grid;
+		grid-template-columns:repeat(7, -1fr);
+		grid-template-rows:repeat(7, -0.25fr);
+	}
+	lefttrack {
+		grid-column: 1/ span 5;
+		grid-row: 1/ span 1;
+		background-color: #00DDDD;
+	}
+	righttrack {
+		grid-column: 1/ span 5;
+		grid-row: 5/ span 1;
+		background-color: #00DDDD;
+	}
+	tankbody {
+		background-color: yellow;
+		grid-column: 2 / span 3;
+		grid-row: 2 / span 3;
+	}
+	barrel {
+		background-color: #99AAAA;
+		grid-column: 4 / span 3;
+		grid-row: 3 / span 1;
+	}
+	.mur {
+		background-color: #009999;
+		grid-column: 14 / span 3;
+		grid-row: 13 / span 3;
+	}
+
+</style>
+<body>
+	<game>
+		<player class="player">
+			<lefttrack></lefttrack>
+			<righttrack></righttrack>
+			<tankbody></tankbody>
+			<barrel></barrel>
+		</player>
+		<div class="mur"></div>
+	</game>		
+</body>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+
+  <script>
+  	$(document).ready(function(){
+
+		$(document).keydown(function (e) {
+			let gridColumn = parseInt($('.player').css('grid-column-start'));
+			let gridRow = parseInt($('.player').css('grid-row-start'));
+			console.log(gridRow);
+			switch (e.keyCode) {
+				case 37:
+					e.preventDefault();
+					$('.player').css('transform', 'rotate(180deg)');
+					if($('.mur').css('grid-column-start') == gridColumn-1) {
+						console.log('REEEEE');
+						break;
+					}
+					gridColumn -= 1;
+					$('.player').css('grid-column-start', gridColumn.toString());
+					break;
+				case 38:
+					e.preventDefault();
+					$('.player').css('transform', 'rotate(270deg)');
+					if($('.mur').css('grid-row-start') == gridRow-1) {
+						console.log('REEEEE');
+						break;
+					}
+					gridRow -= 1;
+					$('.player').css('grid-row-start', gridRow.toString());
+					break;
+				case 39:
+					e.preventDefault();
+					$('.player').css('transform', 'rotate(0deg)');
+					if($('.mur').css('grid-column-start') == gridColumn+1) {
+						console.log('REEEEE');
+						break;
+					}
+					gridColumn += 1;
+					$('.player').css('grid-column-start', gridColumn.toString());
+					break;
+				case 40:
+					e.preventDefault();
+					$('.player').css('transform', 'rotate(90deg)');
+					if($('.mur').css('grid-row-start') == gridRow+1) {
+						console.log('REEEEE');
+						break;
+					}
+					gridRow += 1;
+					$('.player').css('grid-row-start', gridRow.toString());
+					break;
+			}
+		});
+  	})
+  </script>>

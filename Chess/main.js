@@ -1,5 +1,6 @@
 var turnColour = 'W';
 var currentPiece;
+var didCastleMove = [0,0,0,0,0,0];
 
 $('.container').click(function(){
 	//Remove green orbs
@@ -79,10 +80,8 @@ $('.container').click(function(){
 		case 'Rook':
 			
 			//Move up
-			let checkingSquare = $(this);
-			while((!(checkingSquare.hasClass('I'))) && (checkingSquare.prev().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && 
-			(checkingSquare.prev().attr('class').split(' ')[checkingSquare.prev().attr('class').split(' ').length-1][0]!=
-			$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			var checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('I'))) && (checkingSquare.prev().attr('class').split(' ')[checkingSquare.prev().attr('class').split(' ').length-1].substring(1, checkingSquare.prev().attr('class').split(' ')[checkingSquare.prev().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.prev().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && (checkingSquare.prev().attr('class').split(' ')[checkingSquare.prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
 			{
 				checkingSquare = checkingSquare.prev();
 				if(!(checkingSquare.hasClass('empty')))
@@ -96,9 +95,7 @@ $('.container').click(function(){
 			
 			//Move down
 			checkingSquare = $(this);
-			while((!(checkingSquare.hasClass('P'))) && (checkingSquare.next().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && 
-			(checkingSquare.next().attr('class').split(' ')[checkingSquare.next().attr('class').split(' ').length-1][0]!=
-			$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			while((!(checkingSquare.hasClass('P'))) && (checkingSquare.next().attr('class').split(' ')[checkingSquare.next().attr('class').split(' ').length-1].substring(1, checkingSquare.next().attr('class').split(' ')[checkingSquare.next().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.next().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && (checkingSquare.next().attr('class').split(' ')[checkingSquare.next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
 			{
 				checkingSquare = checkingSquare.next();
 				if(!(checkingSquare.hasClass('empty')))
@@ -112,7 +109,7 @@ $('.container').click(function(){
 			
 			//Move right
 			checkingSquare = $(this);
-			while((!(checkingSquare.hasClass('H'))) && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			while((!(checkingSquare.hasClass('H'))) && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
 			{
 				checkingSquare = checkingSquare.next().next().next().next().next().next().next().next();
 				if(!(checkingSquare.hasClass('empty')))
@@ -126,7 +123,7 @@ $('.container').click(function(){
 			
 			//Move left
 			checkingSquare = $(this);
-			while((!(checkingSquare.hasClass('A'))) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			while((!(checkingSquare.hasClass('A'))) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
 			{
 				checkingSquare = checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev();
 				if(!(checkingSquare.hasClass('empty')))
@@ -143,20 +140,222 @@ $('.container').click(function(){
 		//Knights
 		case 'Knight':
 			
+			//|/.
+			if((!($(this).is('.A,.O,.P'))) && ($(this).prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, $(this).prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && ($(this).prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0] != $(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).prev().prev().prev().prev().prev().prev().toggleClass('possible');
+			
+			//-/.
+			if((!($(this).is('.A,.B,.P'))) && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0] != $(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().toggleClass('possible');
+			
+			//.\|
+			if((!($(this).is('.H,.O,.P'))) && ($(this).next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, $(this).next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && ($(this).next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0] != $(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).next().next().next().next().next().next().next().next().next().next().toggleClass('possible');
+			
+			//.\-
+			if((!($(this).is('.H,.G,.P'))) && ($(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, $(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && ($(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0] != $(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().toggleClass('possible');
+			
+			//./|
+			if((!($(this).is('.H,.I,.J'))) && ($(this).next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, $(this).next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && ($(this).next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().attr('class').split(' ').length-1][0] != $(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).next().next().next().next().next().next().toggleClass('possible');
+			
+			//./-
+			if((!($(this).is('.G,.H,.I'))) && ($(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, $(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && ($(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0] != $(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).next().next().next().next().next().next().next().next().next().next().next().next().next().next().next().toggleClass('possible');
+			
+			//|\.
+			if((!($(this).is('.A,.I,.J'))) && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0] != $(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().toggleClass('possible');
+			
+			//-\.
+			if((!($(this).is('.A,.B,.I'))) && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0] != $(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().prev().toggleClass('possible');
+			
 			break;
 			
 		//Bishops
 		case 'Bishop':
 			
+			//Move right-up
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('I'))) && (!(checkingSquare.hasClass('H'))) && (checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.next().next().next().next().next().next().next();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move left-up
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('I'))) && (!(checkingSquare.hasClass('A'))) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move left-down
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('P'))) && (!(checkingSquare.hasClass('A'))) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.prev().prev().prev().prev().prev().prev().prev();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move right-down
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('P'))) && (!(checkingSquare.hasClass('H'))) && (checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.next().next().next().next().next().next().next().next().next();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
 			break;
 			
 		//Queens
 		case 'Queen':
+		
+			//Move up
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('I'))) && (checkingSquare.prev().attr('class').split(' ')[checkingSquare.prev().attr('class').split(' ').length-1].substring(1, checkingSquare.prev().attr('class').split(' ')[checkingSquare.prev().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.prev().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && (checkingSquare.prev().attr('class').split(' ')[checkingSquare.prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.prev();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move down
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('P'))) && (checkingSquare.next().attr('class').split(' ')[checkingSquare.next().attr('class').split(' ').length-1].substring(1, checkingSquare.next().attr('class').split(' ')[checkingSquare.next().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.next().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && (checkingSquare.next().attr('class').split(' ')[checkingSquare.next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.next();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move right
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('H'))) && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && (checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.next().next().next().next().next().next().next().next();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move left
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('A'))) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move right-up
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('I'))) && (!(checkingSquare.hasClass('H'))) && (checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.next().next().next().next().next().next().next();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move left-up
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('I'))) && (!(checkingSquare.hasClass('A'))) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.prev().prev().prev().prev().prev().prev().prev().prev().prev();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move left-down
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('P'))) && (!(checkingSquare.hasClass('A'))) && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[checkingSquare.prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.prev().prev().prev().prev().prev().prev().prev();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
+			
+			//Move right-down
+			checkingSquare = $(this);
+			while((!(checkingSquare.hasClass('P'))) && (!(checkingSquare.hasClass('H'))) && (checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && (checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ')[checkingSquare.next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+			{
+				checkingSquare = checkingSquare.next().next().next().next().next().next().next().next().next();
+				if(!(checkingSquare.hasClass('empty')))
+				{
+					checkingSquare.toggleClass('possible');
+					break;
+				}
+				else
+					checkingSquare.toggleClass('possible');
+			}
 			
 			break;
 			
 		//Kings
 		case 'King':
+			
+			
 			
 			break;
 		
@@ -168,14 +367,31 @@ $('.container').click(function(){
 			
 			$('.possible').toggleClass('possible');
 			
+			//Marking whether castling is possible
+			if(currentPiece.is('.A.I')) 
+				didCastleMove[0]=1;
+			else if(currentPiece.is('.E.I'))
+				didCastleMove[1]=1;
+			else if(currentPiece.is('.H.I'))
+				didCastleMove[2]=1;
+			else if(currentPiece.is('.H.P'))
+				didCastleMove[3]=1;
+			else if(currentPiece.is('.E.P'))
+				didCastleMove[0]=1;
+			else if(currentPiece.is('.A.P'))
+				didCastleMove[5]=1;
+			
+			//Castling
+			
+			
 			//enPassant pawn removal
-			if($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1]=='enPassantW')
+			if((currentPiece.attr('class').split(' ')[currentPiece.attr('class').split(' ').length-1] == 'BPawn') && ($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1]=='enPassantW'))
 			{
 				$(this).prev().toggleClass('WPawn');
 				$(this).prev().toggleClass('empty');
 				$(this).toggleClass('empty');
 			}
-			else if($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1]=='enPassantB')
+			else if((currentPiece.attr('class').split(' ')[currentPiece.attr('class').split(' ').length-1] == 'WPawn') && ($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1]=='enPassantB'))
 			{
 				$(this).next().toggleClass('BPawn');
 				$(this).next().toggleClass('empty');
