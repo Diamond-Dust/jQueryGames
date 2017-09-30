@@ -50,13 +50,11 @@ img {
 }
 
 #playField {
-	margin: 10vh 30vw 0vh 30vw;
+	margin: 10vh 25vw 0vh 25vw;
 	display: grid;
 	grid-template-columns: repeat(8, 10vh);
 	grid-template-rows: repeat(8, 10vh);
 }
-
-
 
 .A {
 	grid-column: 1;
@@ -190,4 +188,22 @@ img {
 
 #playField > :nth-child(16n+2), #playField > :nth-child(16n+4), #playField > :nth-child(16n+6) , #playField > :nth-child(16n+8), #playField > :nth-child(16n-1), #playField > :nth-child(16n-3), #playField > :nth-child(16n-5), #playField > :nth-child(16n-7){
 	background-color: #B0B0B0;
+}
+
+.Bl {
+	grid-column: 9;
+	min-height: 10vh;
+	min-width: 20vh;
+	border: black solid 1px;
+	background-color: #B0B0B0!important;
+	color: White;
+}
+
+.Wh {
+	grid-column: 9;
+	min-height: 10vh;
+	min-width: 20vh;
+	border: solid 1px;
+	background-color: White!important;
+	color: Black;
 }

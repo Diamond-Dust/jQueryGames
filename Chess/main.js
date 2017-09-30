@@ -1,6 +1,14 @@
 var turnColour = 'W';
 var currentPiece;
 var didCastleMove = [0,0,0,0,0,0];
+var notationLine ="";
+
+var Wstart = new Date;
+
+setInterval(function() {
+    $('.Timer').text(Math.round((new Date - Wstart), 2) / 1000 + " Seconds");
+}, 10);
+console.log(Wstart);
 
 $('.container').click(function(){
 	//Remove green orbs
@@ -18,7 +26,6 @@ $('.container').click(function(){
 	if((Type[0]!=turnColour) && (Type[0]!='p'))
 		return;
 	
-	console.log(Type);
 	//Setting possible moves
 	switch(Type.slice(1)) {
 		
@@ -27,7 +34,7 @@ $('.container').click(function(){
 			//White pawn
 			if(Type[0] == 'W') {
 				//Double move
-				if(($(this).hasClass('O')) && ($(this).prev().hasClass('empty')))  {
+				if(($(this).hasClass('O')) && ($(this).prev().hasClass('empty')) && ($(this).prev().prev().hasClass('empty')))  {
 					$(this).prev().prev().toggleClass('possible');
 				}
 				//Moving forward
@@ -52,7 +59,7 @@ $('.container').click(function(){
 			//Black pawn
 			else {
 				//Double move
-				if(($(this).hasClass('J')) && ($(this).next().hasClass('empty'))) {
+				if(($(this).hasClass('J')) && ($(this).next().hasClass('empty')) && ($(this).next().next().hasClass('empty'))) {
 					$(this).next().next().toggleClass('possible');
 				}
 				//Move forward
@@ -355,7 +362,53 @@ $('.container').click(function(){
 		//Kings
 		case 'King':
 			
+			//Move up
+			if((!($(this).hasClass('I'))) && ($(this).prev().attr('class').split(' ')[$(this).prev().attr('class').split(' ').length-1].substring(1, $(this).prev().attr('class').split(' ')[$(this).prev().attr('class').split(' ').length-1].length)!='King') && ($(this).prev().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && ($(this).prev().attr('class').split(' ')[$(this).prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).prev().toggleClass('possible');
 			
+			//Move down
+			if((!($(this).hasClass('P'))) && ($(this).next().attr('class').split(' ')[$(this).next().attr('class').split(' ').length-1].substring(1, $(this).next().attr('class').split(' ')[$(this).next().attr('class').split(' ').length-1].length)!='King') && ($(this).next().attr('class').split(' ')[1] == $(this).attr('class').split(' ')[1]) && ($(this).next().attr('class').split(' ')[$(this).next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).next().toggleClass('possible');
+			
+			//Move right
+			if((!($(this).hasClass('H'))) && ($(this).next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, $(this).next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && ($(this).next().next().next().next().next().next().next().next().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && ($(this).next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).next().next().next().next().next().next().next().next().toggleClass('possible');
+			
+			//Move left
+			if((!($(this).hasClass('A'))) && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, $(this).prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[2] == $(this).attr('class').split(' ')[2]) && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).prev().prev().prev().prev().prev().prev().prev().prev().toggleClass('possible');
+			
+			//Move right-up
+			if((!($(this).hasClass('I'))) && (!($(this).hasClass('H'))) && ($(this).next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, $(this).next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && ($(this).next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).next().next().next().next().next().next().next().toggleClass('possible');
+			
+			//Move left-up
+			if((!($(this).hasClass('I'))) && (!($(this).hasClass('A'))) && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, $(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && ($(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).prev().prev().prev().prev().prev().prev().prev().prev().prev().toggleClass('possible');
+			
+			//Move left-down
+			if((!($(this).hasClass('P'))) && (!($(this).hasClass('A'))) && ($(this).prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].substring(1, $(this).prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1].length)!='King') && ($(this).prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ')[$(this).prev().prev().prev().prev().prev().prev().prev().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).prev().prev().prev().prev().prev().prev().prev().toggleClass('possible');
+			
+			//Move right-down
+			if((!($(this).hasClass('P'))) && (!($(this).hasClass('H'))) && ($(this).next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].substring(1, $(this).next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1].length)!='King') && ($(this).next().next().next().next().next().next().next().next().next().attr('class').split(' ')[$(this).next().next().next().next().next().next().next().next().next().attr('class').split(' ').length-1][0]!=$(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1][0]))
+				$(this).next().next().next().next().next().next().next().next().next().toggleClass('possible');
+			
+			//Castling check
+			if(Type[0] == 'W')
+			{
+				if((didCastleMove[5]==0) && (didCastleMove[4]==0) && $('.B.P').hasClass('empty')&& $('.C.P').hasClass('empty')&& $('.D.P').hasClass('empty'))
+					$('.C.P').toggleClass('possible');
+				if((didCastleMove[3]==0) && (didCastleMove[4]==0) && $('.F.P').hasClass('empty')&& $('.G.P').hasClass('empty'))
+					$('.G.P').toggleClass('possible');
+			}
+			else
+			{
+				if((didCastleMove[0]==0) && (didCastleMove[1]==0) && $('.B.I').hasClass('empty')&& $('.C.I').hasClass('empty')&& $('.D.I').hasClass('empty'))
+					$('.C.I').toggleClass('possible');
+				if((didCastleMove[2]==0) && (didCastleMove[1]==0) && $('.F.I').hasClass('empty')&& $('.G.I').hasClass('empty'))
+					$('.G.I').toggleClass('possible');
+			}
 			
 			break;
 		
@@ -364,6 +417,20 @@ $('.container').click(function(){
 			//Prevent capture of the King if I forgot about the move
 			if(($(this).hasClass('BKing')) || ($(this).hasClass('WKing')))
 				return;
+			
+			//Notation
+			notationLine = "";
+			if(currentPiece.attr('class').split(' ')[currentPiece.attr('class').split(' ').length-1][1] != 'P')
+				notationLine += currentPiece.attr('class').split(' ')[currentPiece.attr('class').split(' ').length-1][1];
+			notationLine += currentPiece.attr('class').split(' ')[1].toLowerCase();
+			notationLine += 9-((currentPiece.attr('class').split(' ')[2]).charCodeAt(0)-72);
+			if($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-2] == 'empty')
+				notationLine += '-';
+			else
+				notationLine += ':';
+			notationLine += $(this).attr('class').split(' ')[1].toLowerCase();
+			notationLine += 9-(($(this).attr('class').split(' ')[2]).charCodeAt(0)-72);
+			console.log(notationLine);
 			
 			$('.possible').toggleClass('possible');
 			
@@ -377,12 +444,53 @@ $('.container').click(function(){
 			else if(currentPiece.is('.H.P'))
 				didCastleMove[3]=1;
 			else if(currentPiece.is('.E.P'))
-				didCastleMove[0]=1;
+				didCastleMove[4]=1;
 			else if(currentPiece.is('.A.P'))
 				didCastleMove[5]=1;
 			
 			//Castling
-			
+			if(currentPiece.hasClass("BKing"))
+			{
+				if($(this).is('.C.I'))
+				{
+					$('.D.I').toggleClass('empty');
+					$('.D.I').toggleClass($('.A.I').attr('class').split(' ')[$('.A.I').attr('class').split(' ').length-1]);
+					$('.A.I').toggleClass($('.A.I').attr('class').split(' ')[$('.A.I').attr('class').split(' ').length-1]);
+					$('.A.I').toggleClass('empty');
+					didCastleMove[0]=1;
+					didCastleMove[1]=1;
+				}
+				else if($(this).is('.G.I'))
+				{
+					$('.F.I').toggleClass('empty');
+					$('.F.I').toggleClass($('.H.I').attr('class').split(' ')[$('.H.I').attr('class').split(' ').length-1]);
+					$('.H.I').toggleClass($('.H.I').attr('class').split(' ')[$('.H.I').attr('class').split(' ').length-1]);
+					$('.H.I').toggleClass('empty');
+					didCastleMove[2]=1;
+					didCastleMove[1]=1;
+				}
+			}
+			else if(currentPiece.hasClass('WKing'))
+			{
+				if($(this).is('.C.P'))
+				{
+					$('.D.P').toggleClass('empty');
+					$('.D.P').toggleClass($('.A.P').attr('class').split(' ')[$('.A.P').attr('class').split(' ').length-1]);
+					$('.A.P').toggleClass($('.A.P').attr('class').split(' ')[$('.A.P').attr('class').split(' ').length-1]);
+					$('.A.P').toggleClass('empty');
+					didCastleMove[5]=1;
+					didCastleMove[4]=1;
+				}
+				else if($(this).is('.G.P'))
+				{
+					$('.F.P').toggleClass('empty');
+					$('.F.P').toggleClass($('.H.P').attr('class').split(' ')[$('.H.P').attr('class').split(' ').length-1]);
+					$('.H.P').toggleClass($('.H.P').attr('class').split(' ')[$('.H.P').attr('class').split(' ').length-1]);
+					$('.H.P').toggleClass('empty');
+					didCastleMove[3]=1;
+					didCastleMove[4]=1;
+				}
+			}
 			
 			//enPassant pawn removal
 			if((currentPiece.attr('class').split(' ')[currentPiece.attr('class').split(' ').length-1] == 'BPawn') && ($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1]=='enPassantW'))
@@ -404,7 +512,6 @@ $('.container').click(function(){
 			else if((currentPiece.attr('class').split(' ')[currentPiece.attr('class').split(' ').length-1]=='WPawn') && (currentPiece.hasClass('O')) && ($(this).hasClass('M')))
 				$(this).next().toggleClass('enPassantW');
 			
-			console.log($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1])
 			$(this).toggleClass($(this).attr('class').split(' ')[$(this).attr('class').split(' ').length-1]);
 			$(this).toggleClass(currentPiece.attr('class').split(' ')[currentPiece.attr('class').split(' ').length-1]);
 			
@@ -423,9 +530,9 @@ $('.container').click(function(){
 				$('#BBimg').click(function() {$('#myModalB').hide(); $('.BPawn.P').toggleClass('BBishop'); $('.BPawn.P').toggleClass('BPawn');});
 				$('#BQimg').click(function() {$('#myModalB').hide(); $('.BPawn.P').toggleClass('BQueen'); $('.BPawn.P').toggleClass('BPawn');});
 			}
-			
+					
 			currentPiece.toggleClass(currentPiece.attr('class').split(' ')[currentPiece.attr('class').split(' ').length-1]);
-			$(currentPiece).toggleClass('empty');
+			currentPiece.toggleClass('empty');
 			currentPiece = null;
 			//End turn
 			if(turnColour=='W')
