@@ -3,13 +3,65 @@ var currentPiece;
 var didCastleMove = [0,0,0,0,0,0];
 var notationLine ="";
 
-var Wstart = new Date;
+var ClockB = {
+    totalSeconds: 1200,
+	time: "0",
 
-setInterval(function() {
-    $('.Timer').text(Math.round((new Date - Wstart), 2) / 1000 + " Seconds");
-}, 10);
-console.log(Wstart);
+    start: function () {
+        var self = this;
 
+        this.interval = setInterval(function () {
+            self.totalSeconds -= 1;
+
+			self.time = (Math.floor(self.totalSeconds / 3600) + ':' + Math.floor(self.totalSeconds / 60 % 60) + ':' + parseInt(self.totalSeconds % 60)).toString();
+			console.log(self.time);
+			$(".Bl.Timer").text(self.time);
+		}, 1000);
+    },
+
+    pause: function () {
+        clearInterval(this.interval);
+        delete this.interval;
+		$(".Bl.Timer").text(self.time);
+    },
+
+    resume: function () {
+        if (!this.interval) this.start();
+    }
+};
+ClockB.start();
+
+
+var ClockW = {
+    totalSeconds: 1200,
+	time: "0",
+
+    start: function () {
+        var self = this;
+
+        this.interval = setInterval(function () {
+            self.totalSeconds -= 1;
+
+			self.time = (Math.floor(self.totalSeconds / 3600) + ':' + Math.floor(self.totalSeconds / 60 % 60) + ':' + parseInt(self.totalSeconds % 60)).toString();
+			console.log(self.time);
+			$(".Wh.Timer").text(self.time);
+		}, 1000);
+    },
+
+    pause: function () {
+        clearInterval(this.interval);
+        delete this.interval;
+		$(".Wh.Timer").text(self.time);
+    },
+
+    resume: function () {
+        if (!this.interval) this.start();
+    }
+};
+ClockW.start();
+
+ClockB.pause();
+ClockW.pause();
 $('.container').click(function(){
 	//Remove green orbs
 	if(!($(this).is('.possible'))) {
